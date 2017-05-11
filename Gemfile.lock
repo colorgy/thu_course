@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    thu_course (0.2.8)
+    thu_course (0.2.9)
       nokogiri (~> 1.6.0)
 
 GEM
@@ -24,4 +24,4 @@ DEPENDENCIES
   thu_course!
 
 BUNDLED WITH
-   1.11.2
+   1.13.6

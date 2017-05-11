@@ -22,14 +22,28 @@ module ThuCourse
   def self.department_id(year, semester)
     uri = URI("http://course.service.thu.edu.tw/view-dept/#{year}/#{semester}/everything").normalize
     doc = Nokogiri::HTML(open(uri))
-    a_tags = doc.css('.b a') # => array of node
     hash = []
-    a_tags.each do |a_tag|
-      name = a_tag.text.strip
-      id = a_tag['href'].split('/').last
-      hash << { id: id,
-                name: name }
+    rows = doc.css('.aqua_table tbody tr')
+    rows.each do |row|
+      id = row.css('td:nth-child(1) a')[0]['href'].split('/').last
+      name = row.css('td:nth-child(1)').text.strip
+      number = row.css('td:nth-child(2)').text.strip.scan(/(?<digit>\d+)/)[2][0]
+      hash << {
+        id: id,
+        name: name,
+        number: number
+      }
     end
+    # a_tags = doc.css('.b a') # => array of node
+    # numbers = doc.xpath('//*[@id="no-more-tables"]/tbody/tr[1]/td[2]')
+    # a_tags.each_with_index do |a_tag, index|
+    #   name = a_tag.text.strip
+    #   id = a_tag['href'].split('/').last
+    #   hash << { id: id,
+    #             name: name,
+    #             numbers: numbers[index]
+    #   }
+    # end
     hash
   end
    
