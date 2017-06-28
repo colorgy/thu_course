@@ -60,6 +60,7 @@ module ThuCourse
     tr_tag.each do |tr|
       td_tag = tr.css('td')
       next unless td_tag[0]
+      next unless td_tag[0].css('a').present?
       course_id = td_tag[0].css('a').text.strip
       name    = td_tag[1].text.strip
       credit  = td_tag[2].text.strip
